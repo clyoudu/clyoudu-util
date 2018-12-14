@@ -1,0 +1,80 @@
+package github.clyoudu.consoletable.util;
+
+import github.clyoudu.consoletable.enums.Align;
+import github.clyoudu.consoletable.table.Cell;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Create by IntelliJ IDEA
+ * tools for print lines
+ * @author chenlei
+ * @dateTime 2018/12/14 9:40
+ * @description PrintUtil
+ */
+public class PrintUtil {
+
+    /**
+     * print sep line
+     * @param columnWidths max width of each column
+     * @param horizontalSep char of h-sep, default '-'
+     * @param verticalSep char of v-sep, default '|'
+     * @param joinSep char of corner, default '+'
+     * @return like:
+     * +------------+--------------+------------+
+     */
+    public static List<String> printLineSep(int[] columnWidths,String horizontalSep,String verticalSep,String joinSep){
+        StringBuilder line = new StringBuilder();
+        for (int i = 0; i < columnWidths.length; i++) {
+            String l = String.join("", Collections.nCopies(columnWidths[i] +
+                    verticalSep.length() + 1, horizontalSep));
+            line.append(joinSep).append(l).append(i == columnWidths.length - 1 ? joinSep : "");
+        }
+        return Collections.singletonList(line.toString());
+    }
+
+    /**
+     * print real data rows
+     * @param rows data rows
+     * @param columnWidths max width of each column
+     * @param verticalSep char of v-sep, default '|'
+     * @return like:
+     * | super      | broccoli     | flexible   |
+     * | assumption | announcement | reflection |
+     * | logic      | pleasant     | wild       |
+     */
+    public static List<String> printRows(List<List<Cell>> rows, int[] columnWidths, String verticalSep){
+        List<String> result = new ArrayList<>();
+        for (List<Cell> row : rows) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < row.size(); i++) {
+                Cell cell = row.get(i);
+                if(cell == null){
+                    cell = new Cell("");
+                }
+                //add v-sep after last column
+                String verStrTemp = i == row.size() - 1 ? verticalSep : "";
+                Align align = cell.getAlign();
+                switch (align){
+                    case LEFT:
+                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.rightPad(cell.getValue(), columnWidths[i]), verStrTemp));
+                        break;
+                    case RIGHT:
+                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.leftPad(cell.getValue(), columnWidths[i]), verStrTemp));
+                        break;
+                    case CENTER:
+                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.center(cell.getValue(), columnWidths[i]), verStrTemp));
+                        break;
+                    default:
+                        throw new IllegalArgumentException("wrong align : " + align.name());
+                }
+            }
+            result.add(sb.toString());
+        }
+        return result;
+    }
+
+}
