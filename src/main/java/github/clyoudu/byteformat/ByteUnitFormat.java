@@ -170,6 +170,7 @@ public enum ByteUnitFormat {
         System.out.println(ByteUnitFormat.M.to(ByteUnitFormat.G, 4096L));
         System.out.println(ByteUnitFormat.B.humanReadable(174541987L));
         System.out.println(M.humanReadable(1024L));
+        System.out.println(M.humanReadable(1024L, false));
     }
 
 }
