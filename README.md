@@ -130,3 +130,19 @@ System.out.print(generate(System.getProperty("user.dir") + "/src/main/java", new
            └── packagegenerator
  */
 ```
+
+## collectorext
+some extend methods for `java.util.stream.Collectors`
+- `toJsonArray`: collect array as `com.alibaba.fastjson.JSONArray`
+    ```java
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("a", "a");
+        map.put("b", "b");
+        map.put("c", "c");
+        map.put("d", "d");
+        System.out.println(map.entrySet().stream().collect(toJsonArray()));
+        System.out.println(Stream.of("a","b","c","d").collect(toJsonArray()));
+        System.out.println(Stream.of("a","b","c","d").map(s -> new JSONObject().fluentPut(s,s)).collect(toJsonArray()));
+    }
+    ```
