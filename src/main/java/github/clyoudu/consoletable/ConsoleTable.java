@@ -5,6 +5,7 @@ import github.clyoudu.consoletable.enums.NullPolicy;
 import github.clyoudu.consoletable.table.Body;
 import github.clyoudu.consoletable.table.Cell;
 import github.clyoudu.consoletable.table.Header;
+import github.clyoudu.consoletable.util.StringPadUtil;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class ConsoleTable {
                             cell = consoleTable.nullPolicy.getCell(cell);
                             row.set(i,cell);
                         }
-                        int length = cell.getValue().length();
+                        int length = StringPadUtil.strLength(cell.getValue());
                         if(consoleTable.columnWidths[i] < length){
                             consoleTable.columnWidths[i] = length;
                         }
@@ -157,7 +158,7 @@ public class ConsoleTable {
             add(new ArrayList<Cell>(){{
                 add(new Cell("ashe"));
                 add(new Cell("ashe_111@hotmail.com"));
-                add(new Cell("9876543210"));
+                add(new Cell("9876543中文测试210"));
             }});
             add(new ArrayList<Cell>(){{
                 add(null);
@@ -166,6 +167,31 @@ public class ConsoleTable {
             }});
         }};
         //default
+        new ConsoleTable.ConsoleTableBuilder().addHeaders(header).addRows(body).build().print();
+
+        //中文
+        header = new ArrayList<Cell>(){{
+            add(new Cell("姓名name"));
+            add(new Cell("电子邮箱email"));
+            add(new Cell("电话号码tel"));
+        }};
+        body = new ArrayList<List<Cell>>(){{
+            add(new ArrayList<Cell>(){{
+                add(new Cell("凯特kat"));
+                add(new Cell(Align.CENTER,"kat@gimal.com"));
+                add(new Cell(Align.RIGHT,"54321"));
+            }});
+            add(new ArrayList<Cell>(){{
+                add(new Cell("艾希ashe"));
+                add(new Cell("ashe_111@hotmail.com"));
+                add(new Cell("9876543210"));
+            }});
+            add(new ArrayList<Cell>(){{
+                add(new Cell("這是一串很長的繁體中文"));
+                add(new Cell("これは長い日本語です"));
+                add(new Cell(Align.LEFT,"11这是一串很长的中文"));
+            }});
+        }};
         new ConsoleTable.ConsoleTableBuilder().addHeaders(header).addRows(body).build().print();
 
         //no header

@@ -2,7 +2,6 @@ package github.clyoudu.consoletable.util;
 
 import github.clyoudu.consoletable.enums.Align;
 import github.clyoudu.consoletable.table.Cell;
-import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +29,7 @@ public class PrintUtil {
         StringBuilder line = new StringBuilder();
         for (int i = 0; i < columnWidths.length; i++) {
             String l = String.join("", Collections.nCopies(columnWidths[i] +
-                    verticalSep.length() + 1, horizontalSep));
+                    StringPadUtil.strLength(verticalSep) + 1, horizontalSep));
             line.append(joinSep).append(l).append(i == columnWidths.length - 1 ? joinSep : "");
         }
         return Collections.singletonList(line.toString());
@@ -60,13 +59,13 @@ public class PrintUtil {
                 Align align = cell.getAlign();
                 switch (align){
                     case LEFT:
-                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.rightPad(cell.getValue(), columnWidths[i]), verStrTemp));
+                        sb.append(String.format("%s %s %s", verticalSep, StringPadUtil.rightPad(cell.getValue(), columnWidths[i]), verStrTemp));
                         break;
                     case RIGHT:
-                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.leftPad(cell.getValue(), columnWidths[i]), verStrTemp));
+                        sb.append(String.format("%s %s %s", verticalSep, StringPadUtil.leftPad(cell.getValue(), columnWidths[i]), verStrTemp));
                         break;
                     case CENTER:
-                        sb.append(String.format("%s %s %s", verticalSep, StringUtils.center(cell.getValue(), columnWidths[i]), verStrTemp));
+                        sb.append(String.format("%s %s %s", verticalSep, StringPadUtil.center(cell.getValue(), columnWidths[i]), verStrTemp));
                         break;
                     default:
                         throw new IllegalArgumentException("wrong align : " + align.name());
