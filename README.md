@@ -146,3 +146,21 @@ some extend methods for `java.util.stream.Collectors`
         System.out.println(Stream.of("a","b","c","d").map(s -> new JSONObject().fluentPut(s,s)).collect(toJsonArray()));
     }
     ```
+
+## proxysqlclient
+connect proxysql admin via java code, using [jasync-sql](https://github.com/jasync-sql/jasync-sql)
+- proxysql & mysql supported
+- transaction supported
+- batch execute supported
+```java
+    public static void main(String[] args) {
+        //select
+        log.info(JSON.toJSONString(executeQuery("localhost", 6032, "main", "root", "root",
+                "select * from mysql_users",
+                null)));
+        //ddl & batch execute
+        log.info(JSON.toJSONString(execute("localhost", 6032, "main", "root", "root",
+                Arrays.asList("INSERT INTO mysql_users(username,password,default_hostgroup) VALUES ('app','pass',2)", "load mysql user to runtime", "save mysql user to disk"),
+                null, false)));
+    }
+```

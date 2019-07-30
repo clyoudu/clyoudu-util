@@ -10,10 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -202,10 +199,14 @@ public class ProxysqlClient {
     }
 
     public static void main(String[] args) {
-        //execute("192.168.20.41", 6032, "main", "cluster1", "clusterpass", "INSERT INTO mysql_users(username,password,default_hostgroup) VALUES ('app','pass',2);save mysql users to disk;load mysql users to runtime;", 10);
-        log.info(JSON.toJSONString(executeQuery("localhost", 3306, "mysql", "root", "root",
-                "select * from user",
+        //select
+        log.info(JSON.toJSONString(executeQuery("localhost", 6032, "main", "root", "root",
+                "select * from mysql_users",
                 null)));
+        //ddl & batch execute
+        log.info(JSON.toJSONString(execute("localhost", 6032, "main", "root", "root",
+                Arrays.asList("INSERT INTO mysql_users(username,password,default_hostgroup) VALUES ('app','pass',2)", "load mysql user to runtime", "save mysql user to disk"),
+                null, false)));
     }
 
 }
