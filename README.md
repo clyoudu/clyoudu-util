@@ -189,3 +189,32 @@ public class FileUtilTest {
 
 }
 ```
+
+## randompassword
+generate random password
+
+```java
+package github.clyoudu.randompassword;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author leichen
+ * @date 2019/12/2 5:57 下午
+ */
+@Slf4j
+public class RandomPasswordUtilTest {
+
+    public static void main(String[] args) {
+        log.info("{}", RandomPasswordUtil.randomPassword(16, 2, 2, 2, 2));//QV6~@9oEHR7umzOr
+        log.info("{}", RandomPasswordUtil.randomPassword(16, 2, 2, 2, 2));//R2^8egH3QF%OUg~P
+        log.info("{}", RandomPasswordUtil.defaultModelRandomPassword());//f4&8hDebq$&vTV4o
+        log.info("{}", RandomPasswordUtil.defaultModelRandomPassword());//QSPUaq9j3~eHw8mK
+        log.info("{}", RandomPasswordUtil.randomPassword(8, 1, 1, 1, 1));//2e%v#U0D
+        log.info("{}", RandomPasswordUtil.randomPassword(8, 1, 1, 1, 1));//nF*8Cv5b
+        log.info("{}", RandomPasswordUtil.randomPassword(8, 1, 1, 0, 1));//22IieW9V
+        log.info("{}", RandomPasswordUtil.randomPassword(8, 1, 1, 0, 1));//UVE1SxLP
+    }
+
+}
+```
