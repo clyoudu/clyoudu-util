@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.*;
-import java.util.function.BiConsumer;
-import java.util.function.BinaryOperator;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.*;
 import java.util.stream.Collector;
 import java.util.stream.Stream;
 
@@ -85,6 +83,11 @@ public class CollectorsExt {
                 Collections.unmodifiableSet(EnumSet.of(Collector.Characteristics.IDENTITY_FINISH)));
     }
 
+    public static <T> Predicate<T> distinctBy(Function<? super T, ?> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
     public static void main(String[] args) {
         Map<String, String> map = new HashMap<>();
         map.put("a", "a");
@@ -94,6 +97,14 @@ public class CollectorsExt {
         System.out.println(map.entrySet().stream().collect(toJsonArray()));
         System.out.println(Stream.of("a","b","c","d").collect(toJsonArray()));
         System.out.println(Stream.of("a","b","c","d").map(s -> new JSONObject().fluentPut(s,s)).collect(toJsonArray()));
+
+        List<JSONObject> list = new ArrayList<>();
+        list.add(new JSONObject().fluentPut("name", "a").fluentPut("age", 1));
+        list.add(new JSONObject().fluentPut("name", "b").fluentPut("age", 2));
+        list.add(new JSONObject().fluentPut("name", "a").fluentPut("age", 3));
+        list.add(new JSONObject().fluentPut("name", "c").fluentPut("age", 4));
+
+        list.stream().filter(distinctBy(o -> o.getString("name"))).forEach(System.out::println);
     }
 
 }
