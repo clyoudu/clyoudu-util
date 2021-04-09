@@ -3,7 +3,7 @@ package github.clyoudu.oom;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * java.lang.OutOfMemoryError: unable tocreate new native thread
+ * java.lang.OutOfMemoryError: unable to create new native thread
  * Note: May cause the operating system to be unavailable
  * @author leichen
  * @date 2019/12/6 5:37 下午

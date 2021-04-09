@@ -145,7 +145,7 @@ public class PackageGenerator {
     public static void main(String args[]) throws Exception {
         System.out.print(generate(System.getProperty("user.dir") + "/src/main/java", new HashSet<>(Arrays.asList(".idea", "target", ".git")), true, true));
         System.out.println("\n\n------------------------------------------------\n");
-        System.out.print(generate(System.getProperty("user.dir") + "/src/main/java", new HashSet<>(Arrays.asList(".idea", "target", ".git")), false, false));
+        System.out.print(generate("/Users/leichen/sofa/spring-cloud-seata-demo/business", new HashSet<>(Arrays.asList(".idea", "target", ".git")), true, true));
     }
 
 }

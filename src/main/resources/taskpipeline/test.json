@@ -1,0 +1,326 @@
+{
+  "name": "Upgrade FKJX Application",
+  "type": "linear",
+  "stages": [
+    {
+      "name": "Stop Nginx",
+      "type": "linear",
+      "stages": [
+        {
+          "name": "Stop Nginx Backup",
+          "type": "single"
+        },
+        {
+          "name": "Stop Nginx Master",
+          "type": "single"
+        }
+      ]
+    },
+    {
+      "name": "Stop Tomcat",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Stop Tomcat1",
+          "type": "single"
+        },
+        {
+          "name": "Stop Tomcat2",
+          "type": "single"
+        }
+      ]
+    },
+    {
+      "name": "Stop kcbp & kcxp",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Stop kcbp",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Stop KCBP1",
+              "type": "single"
+            },
+            {
+              "name": "Stop KCBP2",
+              "type": "single"
+            }
+          ]
+        },
+        {
+          "name": "Stop KCXP",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Stop KCXP1",
+              "type": "single"
+            },
+            {
+              "name": "Stop KCXP2",
+              "type": "single"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Upgrade All Components",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Upgrade Nginx",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Upgrade Nginx1",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup Nginx Config File",
+                  "type": "single"
+                },
+                {
+                  "name": "Write Nginx Config File",
+                  "type": "single"
+                }
+              ]
+            },
+            {
+              "name": "Upgrade Nginx2",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup Nginx Config File",
+                  "type": "single"
+                },
+                {
+                  "name": "Write Nginx Config File",
+                  "type": "single"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upgrade Tomcat War",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Upgrade Tomcat1",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup Tomcat War File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to War",
+                  "type": "single"
+                }
+              ]
+            },
+            {
+              "name": "Upgrade Tomcat2",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup Tomcat War File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to War",
+                  "type": "single"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upgrade KCXP DLL",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Upgrade KCXP1",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup KCXP DLL File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to DLL",
+                  "type": "single"
+                },
+                {
+                  "name": "Move DLL to Instance Dir",
+                  "type": "single"
+                }
+              ]
+            },
+            {
+              "name": "Upgrade KCXP2",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup KCXP DLL File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to DLL",
+                  "type": "single"
+                },
+                {
+                  "name": "Move DLL to Instance Dir",
+                  "type": "single"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upgrade KCBP DLL",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Upgrade KCBP1",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup KCBP DLL File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to DLL",
+                  "type": "single"
+                },
+                {
+                  "name": "Move DLL to Instance Dir",
+                  "type": "single"
+                }
+              ]
+            },
+            {
+              "name": "Upgrade KCBP2",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup KCBP DLL File",
+                  "type": "single"
+                },
+                {
+                  "name": "Upload Zip",
+                  "type": "single"
+                },
+                {
+                  "name": "Unarchive Zip to DLL",
+                  "type": "single"
+                },
+                {
+                  "name": "Move DLL to Instance Dir",
+                  "type": "single"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Upgrade Database Sql",
+          "type": "parallel",
+          "stages": [
+            {
+              "name": "Upgrade Database",
+              "type": "linear",
+              "stages": [
+                {
+                  "name": "Backup Database Data and Structure",
+                  "type": "single"
+                },
+                {
+                  "name": "Execute Sql by JDBC",
+                  "type": "single"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Start KCBP",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Start KCBP1",
+          "type": "single"
+        },
+        {
+          "name": "Start KCBP2",
+          "type": "single"
+        }
+      ]
+    },
+    {
+      "name": "Start KCXP",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Start KCXP1",
+          "type": "single"
+        },
+        {
+          "name": "Start KCXP2",
+          "type": "single"
+        }
+      ]
+    },
+    {
+      "name": "Start Tomcat",
+      "type": "parallel",
+      "stages": [
+        {
+          "name": "Start Tomcat1",
+          "type": "single"
+        },
+        {
+          "name": "Start Tomcat2",
+          "type": "single"
+        }
+      ]
+    },
+    {
+      "name": "Start Nginx",
+      "type": "linear",
+      "stages": [
+        {
+          "name": "Start Nginx Master",
+          "type": "single"
+        },
+        {
+          "name": "Start Nginx Backup",
+          "type": "single"
+        }
+      ]
+    }
+  ]
+}

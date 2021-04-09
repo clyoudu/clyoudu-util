@@ -115,7 +115,8 @@ public class StringPadUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(strLength("이것은매우긴번체의중국어이다", "UTF-8"));
+        System.out.println(strLength("이것은매우긴번체의중국어이다1qw", "UTF-8"));
+        System.out.println("이것은매우긴번체의중국어이다".length());
     }
 
 }
