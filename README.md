@@ -1,5 +1,7 @@
 # clyoudu-util
 
+[中文文档](README_CN.md)
+
 ## byteformat
 Formatting byte size to human readable format, or converting unit from X to Y.
 - unit system: `SI/IEC`
@@ -89,7 +91,7 @@ more similar tools:
 
 [asciitable](https://github.com/vdmeer/asciitable)
 
-## pakagegenerator
+## packagegenerator
 generate directory structure to string
 - ignoreDirs: ignored directories will not appended to result
 - packageCollapse: if true, empty directories in a row, like 'github/clyoudu/util', will generated as `github.clyoudu.util`
@@ -131,7 +133,7 @@ System.out.print(generate(System.getProperty("user.dir") + "/src/main/java", new
  */
 ```
 
-## collectorext
+## collectorsext
 some extend methods for `java.util.stream.Collectors`
 - `toJsonArray`: collect array as `com.alibaba.fastjson.JSONArray`
     ```java
